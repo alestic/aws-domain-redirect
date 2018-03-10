@@ -2,7 +2,6 @@ AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
 Description: Sample SAM configuration for Lambda@Edge to ease deployment and further updates
 Resources:
-
     CFDistribution:
       Type: AWS::CloudFront::Distribution
       Properties:
@@ -13,7 +12,7 @@ Resources:
           Origins:
             -
               Id: MyOrigin
-              DomainName: aws.amazon.com/lambda/edge/
+              DomainName: aws.amazon.com
               CustomOriginConfig:
                 HTTPPort: 80
                 OriginProtocolPolicy: match-viewer
@@ -37,7 +36,7 @@ Resources:
     LambdaEdgeFunctionSample:
         Type: AWS::Serverless::Function
         Properties:
-          CodeUri: s3://<bucket>/lambda_edge.zip
+          CodeUri: ./code/
           Role: !GetAtt LambdaEdgeFunctionRole.Arn
           Runtime: nodejs6.10
           Handler: app.handler
@@ -65,7 +64,6 @@ Resources:
                     - "edgelambda.amazonaws.com"
 
 Outputs:
-
     LambdaEdgeFunctionSample: 
       Description: Lambda@Edge Sample Function ARN
       Value: !GetAtt LambdaEdgeFunctionSample.Arn
